@@ -11,19 +11,17 @@ namespace meteo_gramme
 {
     class DATA
     {
-        /// <summary>
-        /// Declaration of fields
-        /// </summary>
+
+        // Declaration of fields
         private string _latitude;
         private string _longitude;
         private string _stateDateTime;
-        /// <summary>
-        /// This will be the url to access the data we need.
-        /// </summary>
+
+        // This will be the url to access the data we need.
         private const string DEFAULT_URL = "http://api.met.no/weatherapi/locationforecast/1.9/?";
 
-        Temperature temperature;
-        Precipitation precipitation;
+        Temperature _temperature;
+        Precipitation _precipitation;
         private uint CountIterration;
         private DateTime InitDateTime;
 
@@ -34,6 +32,8 @@ namespace meteo_gramme
         public string Longitude { get => _longitude; set => _longitude = value; }
         public string Url { get => DEFAULT_URL + "lat=" + Latitude + ";lon=" + Longitude; }
         public string StateDateTime { get => _stateDateTime; set => _stateDateTime = value; }
+        internal Temperature Temperature { get => _temperature; set => _temperature = value; }
+        internal Precipitation Precipitation { get => _precipitation; set => _precipitation = value; }
 
         /// <summary>
         /// constructor
@@ -44,15 +44,14 @@ namespace meteo_gramme
         {
             Latitude = lat;
             Longitude = lon;
-            temperature = new Temperature();
-            precipitation = new Precipitation();
+            this.Temperature = new Temperature();
+            this.Precipitation = new Precipitation();
             ExtractData();
         }
 
         /// <summary>
         /// Will read the xml file and extract the data and put them in the differente classes
         /// </summary>
-        /// <returns></returns>
         public void ExtractData()
         {
             CountIterration = 0;
@@ -90,23 +89,23 @@ namespace meteo_gramme
                                     break;
                                 case "temperature":
                                     if (reader.MoveToAttribute("value"))
-                                        temperature.Temp[StateDateTime] = reader.Value;
+                                        Temperature.Temp[StateDateTime] = reader.Value;
                                     break;
                                 case "precipitation":
                                     if (reader.MoveToAttribute("value"))
-                                        precipitation.Value[StateDateTime] = reader.Value;
+                                        Precipitation.Value[StateDateTime] = reader.Value;
                                     break;
                                 case "symbol":
                                     if (reader.MoveToAttribute("number"))
-                                        precipitation.Number[StateDateTime] = reader.Value;
+                                        Precipitation.Number[StateDateTime] = reader.Value;
                                     break;
                                 case "minTemperature":
                                     if (reader.MoveToAttribute("value"))
-                                        temperature.TempMin[StateDateTime] = reader.Value;
+                                        Temperature.TempMin[StateDateTime] = reader.Value;
                                     break;
                                 case "maxTemperature":
                                     if (reader.MoveToAttribute("value"))
-                                        temperature.TempMax[StateDateTime] = reader.Value;
+                                        Temperature.TempMax[StateDateTime] = reader.Value;
                                     break;
                                 default:
                                     break;
@@ -126,7 +125,6 @@ namespace meteo_gramme
         /// Will test if the url is reponding
         /// </summary>
         /// <param name="url"></param>
-        /// <returns></returns>
         private bool CanRequest(string url)
         {
             bool result = false;

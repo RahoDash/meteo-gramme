@@ -18,3 +18,12 @@ C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\obj\Debug\met
 C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\obj\Debug\meteo-gramme.csproj.CoreCompileInputs.cache
 C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\obj\Debug\meteo-gramme.exe
 C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\obj\Debug\meteo-gramme.pdb
+C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\bin\Debug\LiveCharts.dll
+C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\bin\Debug\LiveCharts.WinForms.dll
+C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\bin\Debug\LiveCharts.pdb
+C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\bin\Debug\LiveCharts.xml
+C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\bin\Debug\LiveCharts.WinForms.pdb
+C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\bin\Debug\LiveCharts.WinForms.xml
+C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\Administrateur\Desktop\Work\meteo-gramme\app\meteo-gramme\bin\Debug\LiveCharts.Wpf.xml
