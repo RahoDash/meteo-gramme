@@ -37,58 +37,66 @@
             // 
             // txtLat
             // 
-            this.txtLat.Location = new System.Drawing.Point(13, 12);
+            this.txtLat.Location = new System.Drawing.Point(17, 15);
+            this.txtLat.Margin = new System.Windows.Forms.Padding(4);
             this.txtLat.Name = "txtLat";
-            this.txtLat.Size = new System.Drawing.Size(100, 20);
+            this.txtLat.Size = new System.Drawing.Size(132, 22);
             this.txtLat.TabIndex = 0;
             this.txtLat.Text = "46.2043907";
+            this.txtLat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressForDecimal);
             // 
             // txtLon
             // 
-            this.txtLon.Location = new System.Drawing.Point(119, 12);
+            this.txtLon.Location = new System.Drawing.Point(159, 15);
+            this.txtLon.Margin = new System.Windows.Forms.Padding(4);
             this.txtLon.Name = "txtLon";
-            this.txtLon.Size = new System.Drawing.Size(100, 20);
+            this.txtLon.Size = new System.Drawing.Size(132, 22);
             this.txtLon.TabIndex = 1;
             this.txtLon.Text = "6.1431577";
+            this.txtLon.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressForDecimal);
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(225, 12);
+            this.btnLoad.Location = new System.Drawing.Point(299, 9);
+            this.btnLoad.Margin = new System.Windows.Forms.Padding(4);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(75, 20);
+            this.btnLoad.Size = new System.Drawing.Size(100, 38);
             this.btnLoad.TabIndex = 2;
             this.btnLoad.Text = "Load";
             this.btnLoad.UseVisualStyleBackColor = true;
-            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            this.btnLoad.Click += new System.EventHandler(this.Load_Click);
             // 
             // cc1
             // 
-            this.cc1.Location = new System.Drawing.Point(12, 38);
+            this.cc1.Location = new System.Drawing.Point(17, 87);
+            this.cc1.Margin = new System.Windows.Forms.Padding(4);
             this.cc1.Name = "cc1";
-            this.cc1.Size = new System.Drawing.Size(617, 320);
+            this.cc1.Size = new System.Drawing.Size(947, 454);
             this.cc1.TabIndex = 3;
             this.cc1.Text = "cartesianChart1";
             // 
             // dtpWeather
             // 
             this.dtpWeather.CustomFormat = "yyyy-MMM-dd HH:mm:ss";
-            this.dtpWeather.Location = new System.Drawing.Point(428, 12);
+            this.dtpWeather.Location = new System.Drawing.Point(571, 15);
+            this.dtpWeather.Margin = new System.Windows.Forms.Padding(4);
             this.dtpWeather.Name = "dtpWeather";
-            this.dtpWeather.Size = new System.Drawing.Size(200, 20);
+            this.dtpWeather.Size = new System.Drawing.Size(265, 22);
             this.dtpWeather.TabIndex = 4;
             this.dtpWeather.ValueChanged += new System.EventHandler(this.dtpWeather_ValueChanged);
             // 
             // Vue
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(641, 370);
+            this.ClientSize = new System.Drawing.Size(977, 554);
             this.Controls.Add(this.dtpWeather);
             this.Controls.Add(this.cc1);
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.txtLon);
             this.Controls.Add(this.txtLat);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Vue";
             this.Text = "MeteoGramme";
             this.ResumeLayout(false);

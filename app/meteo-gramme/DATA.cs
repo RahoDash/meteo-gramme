@@ -9,52 +9,80 @@ using System.Xml;
 
 namespace meteo_gramme
 {
-    class DATA
+    public class DATA
     {
-
-        // Declaration of fields
-        private string _latitude;
-        private string _longitude;
-        private string _stateDateTime;
 
         // This will be the url to access the data we need.
         private const string DEFAULT_URL = "http://api.met.no/weatherapi/locationforecast/1.9/?";
+        private const decimal DEFAULT_LAT = 46.2043907M;
+        private const decimal DEFAULT_LON = 6.1431577M;
 
-        Temperature _temperature;
-        Precipitation _precipitation;
-        private uint CountIterration;
-        private DateTime InitDateTime;
+        // Declaration of fields
+        private decimal _latitude;
+        private decimal _longitude;
+        public Temperature Temperature;
+        public Precipitation Precipitation;
+
+
+
+        private int CountIterration;
+        private DateTime oldDateTime;
+        private DateTime StateDateTime;
+        //private DateTime StateDate;
 
         /// <summary>
         /// Encapsulation of fields
         /// </summary>
-        public string Latitude { get => _latitude; set => _latitude = value; }
-        public string Longitude { get => _longitude; set => _longitude = value; }
-        public string Url { get => DEFAULT_URL + "lat=" + Latitude + ";lon=" + Longitude; }
-        public string StateDateTime { get => _stateDateTime; set => _stateDateTime = value; }
-        internal Temperature Temperature { get => _temperature; set => _temperature = value; }
-        internal Precipitation Precipitation { get => _precipitation; set => _precipitation = value; }
+        public decimal Latitude { get => _latitude; set
+            {
+                if (value < 1)
+                {
+                    _latitude = DEFAULT_LAT;
+                }
+                else
+                {
+                    _latitude = value;
+                }
+            }
+        }
+        public decimal Longitude
+        {
+            get => _longitude; set
+            {
+                if (value < 1)
+                {
+                    _longitude = DEFAULT_LON;
+                }
+                else
+                {
+                    _longitude = value;
+                }
+            }
+        }
+        public string Url { get => DEFAULT_URL + "lat=" + Latitude.ToString() + ";lon=" + Longitude.ToString(); }
 
         /// <summary>
         /// constructor
         /// </summary>
         /// <param name="lat">This will be the latitude of the location in string</param>
         /// <param name="lon">This will be the longitude of the location in string</param>
-        public DATA(string lat, string lon)
+        public DATA(decimal lat, decimal lon, DateTime dateTime)
         {
             Latitude = lat;
             Longitude = lon;
             this.Temperature = new Temperature();
             this.Precipitation = new Precipitation();
-            ExtractData();
+            ExtractData(dateTime);
         }
 
         /// <summary>
         /// Will read the xml file and extract the data and put them in the differente classes
         /// </summary>
-        public void ExtractData()
+        public void ExtractData(DateTime dateTime)
         {
             CountIterration = 0;
+            int days = 1;
+            StateDateTime = dateTime.Date;
             if (CanRequest(Url))
             {
                 try
@@ -67,58 +95,92 @@ namespace meteo_gramme
                             switch (reader.Name)
                             {
                                 case "model":
+
                                     //InitDateTime = Convert.ToDateTime(reader)
-                                    InitDateTime = reader.MoveToAttribute("from") ? Convert.ToDateTime(reader.Value.Remove(10)).AddDays(3) : DateTime.Now;
+                                    //InitDateTime = reader.MoveToAttribute("from") ? ConvertToDateTime(reader.Value) : DateTime.Now;
                                     break;
                                 case "time":
                                     if (reader.MoveToAttribute("to"))
                                     {
-                                        if (StateDateTime != null)
+                                        if (StateDateTime < ConvertToDate(reader.Value))
                                         {
-                                            if (reader.Value == StateDateTime.Remove(StateDateTime.Length - 1))
-                                                StateDateTime = StateDateTime.Remove(StateDateTime.Length - 1) + ++CountIterration;
-                                            else
-                                            {
-                                                CountIterration = 0;
-                                                StateDateTime = reader.Value + CountIterration;
-                                            }
+                                            reader.Dispose();   
                                         }
                                         else
-                                            StateDateTime = reader.Value + CountIterration;
+                                        {
+                                            if ((CountIterration >= 4) || (days > 4))
+                                            {
+                                                CountIterration = 0;
+                                            }
+                                            CountIterration++;
+                                            
+                                            if (oldDateTime == DateTime.MinValue)
+                                            {
+                                                oldDateTime = ConvertToDate(reader.Value);
+                                            }
+
+                                            if (oldDateTime.AddHours(1) != ConvertToDate(reader.Value).AddHours(1))
+                                            {
+                                                this.Temperature = new Temperature();
+                                                this.Precipitation = new Precipitation();
+                                                oldDateTime = ConvertToDate(reader.Value);
+                                                CountIterration = 0;
+                                                days++;
+                                            }
+
+                                        }
+
+                                        //else
+                                        //{
+                                        //    indexIterration++;
+                                        //    this.Precipitation[StateDateTime] = new Precipitation(); 
+                                        //}
                                     }
                                     break;
                                 case "temperature":
                                     if (reader.MoveToAttribute("value"))
-                                        Temperature.Temp[StateDateTime] = reader.Value;
+                                        Temperature.Temp.Add(Convert.ToDecimal(reader.Value));
                                     break;
                                 case "precipitation":
-                                    if (reader.MoveToAttribute("value"))
-                                        Precipitation.Value[StateDateTime] = reader.Value;
-                                    break;
-                                case "symbol":
-                                    if (reader.MoveToAttribute("number"))
-                                        Precipitation.Number[StateDateTime] = reader.Value;
+                                    if (reader.MoveToAttribute("value") && (CountIterration == 1)) {
+                                        Precipitation.Value.Add(Convert.ToDecimal(reader.Value));
+                                    }
                                     break;
                                 case "minTemperature":
                                     if (reader.MoveToAttribute("value"))
-                                        Temperature.TempMin[StateDateTime] = reader.Value;
+                                        Temperature.TempMin.Add(Convert.ToDecimal(reader.Value));
                                     break;
                                 case "maxTemperature":
                                     if (reader.MoveToAttribute("value"))
-                                        Temperature.TempMax[StateDateTime] = reader.Value;
+                                        Temperature.TempMax.Add(Convert.ToDecimal(reader.Value));
                                     break;
                                 default:
                                     break;
                             }
                         }
                     }
-                    MessageBox.Show("fait");
                 }
                 catch (Exception)
                 {
                     throw;
                 }
             }
+        }
+
+        public DateTime ConvertToDateTime(string date)
+        {
+            DateTime d;
+            date = date.Replace('T',' ');
+            date = date.Remove(date.Length-1);
+            d = Convert.ToDateTime(date) ;
+            return d;
+        }
+        public DateTime ConvertToDate(string date)
+        {
+            DateTime d;
+            date = date.Remove(10);
+            d = Convert.ToDateTime(date);
+            return d;
         }
 
         /// <summary>

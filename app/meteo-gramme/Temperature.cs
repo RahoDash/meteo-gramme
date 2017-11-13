@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace meteo_gramme
 {
-    class Temperature
+    public class Temperature
     {
-        public Dictionary<string, string> TempMin { get; set; }
-        public Dictionary<string, string> TempMax { get; set; }
-        public Dictionary<string, string> Temp { get; set; }
+        public List<decimal> TempMin { get; set; }
+        public List<decimal> TempMax { get; set; }
+        public List<decimal> Temp { get; set; }
 
         public Temperature()
         {
-            Temp = new Dictionary<string, string>();
-            TempMax = new Dictionary<string, string>();
-            TempMin = new Dictionary<string, string>();
+            Temp = new List<decimal>();
+            TempMax = new List<decimal>();
+            TempMin = new List<decimal>();
         }
     }
 }
