@@ -47,7 +47,10 @@ namespace meteo_gramme
                 e.Handled = true;
             }
         }
-
+        private void tmr_update_Tick(object sender, EventArgs e)
+        {
+            this.UpdateView();
+        }
         public void UpdateView()
         {
             try

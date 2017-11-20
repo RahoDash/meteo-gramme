@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtLat = new System.Windows.Forms.TextBox();
             this.txtLon = new System.Windows.Forms.TextBox();
             this.btnLoad = new System.Windows.Forms.Button();
@@ -37,6 +38,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.tmr_update = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // txtLat
@@ -123,6 +125,11 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Altitude";
             // 
+            // tmr_update
+            // 
+            this.tmr_update.Interval = 600000;
+            this.tmr_update.Tick += new System.EventHandler(this.tmr_update_Tick);
+            // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -156,6 +163,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Timer tmr_update;
     }
 }
 

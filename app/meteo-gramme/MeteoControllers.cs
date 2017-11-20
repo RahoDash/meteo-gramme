@@ -26,7 +26,7 @@ namespace meteo_gramme
         #region Fields
         private Temperature _temperature;
         private Precipitation _precipitation;
-        DataExctractor data;
+        Extractor data;
         View View;
         #endregion
 
@@ -41,7 +41,7 @@ namespace meteo_gramme
             this.View = view;
             try
             {
-                data = new DataExctractor(Convert.ToDecimal(lat), Convert.ToDecimal(lon), Convert.ToDecimal(alt), dateTime);
+                data = new Extractor(Convert.ToDecimal(lat), Convert.ToDecimal(lon), Convert.ToDecimal(alt), dateTime);
             }
             catch (Exception)
             {
@@ -130,7 +130,7 @@ namespace meteo_gramme
             };
         }
 
-        public List<string> AxixX_Hours()
+        private List<string> AxixX_Hours()
         {
             List<string> axixX = new List<string>();
             int count = 0;

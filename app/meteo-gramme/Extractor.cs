@@ -12,7 +12,7 @@ using System.Xml;
 
 namespace meteo_gramme
 {
-    public class DataExctractor
+    public class Extractor
     {
 
         #region Const
@@ -45,7 +45,7 @@ namespace meteo_gramme
         #endregion
 
         #region Constructor
-        public DataExctractor() : this(DEFAULT_LAT, DEFAULT_LON, DEFAULT_ALT, DateTime.Now)
+        public Extractor() : this(DEFAULT_LAT, DEFAULT_LON, DEFAULT_ALT, DateTime.Now)
         {
         }
         /// <summary>
@@ -53,7 +53,7 @@ namespace meteo_gramme
         /// </summary>
         /// <param name="lat">This will be the latitude of the location in string</param>
         /// <param name="lon">This will be the longitude of the location in string</param>
-        public DataExctractor(decimal lat, decimal lon, decimal alt, DateTime dateTime)
+        public Extractor(decimal lat, decimal lon, decimal alt, DateTime dateTime)
         {
             this.Latitude = lat;
             this.Longitude = lon;
@@ -70,7 +70,7 @@ namespace meteo_gramme
         /// </summary>
         /// <param name="date">XML date from api.met.no</param>
         /// <returns>datetime</returns>
-        public DateTime ConvertToDate(string date)
+        private DateTime ConvertToDate(string date)
         {
             DateTime d;
             date = date.Remove(10);
@@ -115,9 +115,8 @@ namespace meteo_gramme
         /// <summary>
         /// Will read the xml file and extract the data and put them in the differente classes
         /// </summary>
-        public void ExtractData(DateTime dateTime)
+        private void ExtractData(DateTime dateTime)
         {
-            //
             int daysIterration = 1;
 
             IterrationOfPrecipitation = 0;
