@@ -60,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataExctractor.cs" />
-    <Compile Include="Meteo.cs" />
+    <Compile Include="MeteoControllers.cs" />
     <Compile Include="Precipitation.cs" />
     <Compile Include="Temperature.cs" />
     <Compile Include="View.cs">

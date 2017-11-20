@@ -1,4 +1,11 @@
-﻿using LiveCharts; //Core of the library
+﻿/*
+ * Ruben Carvalho et Besmir Silka 
+ * CFPT - T.IS-E2A
+ * 20.11.2017
+ * POO v4.0 - meteo-gramme
+ * Create the meteogram for the view
+ */
+using LiveCharts; //Core of the library
 using LiveCharts.Wpf; //The WPF controls
 using System;
 using System.Collections.Generic;
@@ -7,7 +14,7 @@ using System.Windows.Media;
 
 namespace meteo_gramme
 {
-    public class Meteo
+    public class MeteoControllers
     {
 
         #region Constant
@@ -29,7 +36,7 @@ namespace meteo_gramme
         #endregion
 
         #region Constructors
-        public Meteo(decimal lat, decimal lon, decimal alt, DateTime dateTime, View view)
+        public MeteoControllers(decimal lat, decimal lon, decimal alt, DateTime dateTime, View view)
         {
             this.View = view;
             try
@@ -132,19 +139,33 @@ namespace meteo_gramme
 
             date = date.AddDays(3);
 
+            //For the third day we need to begin at hour 0
+            //so basicly, the api will give us only the 6 first hour,
+            //to 0 to 5 it will have a 9 value for the day,
+            //because we count the hour 06:00, 12:00 and 18:00
+            //counted as 3 more.
             if (this.Temperature.Temp.Count == 9)
             {
                 hourLimit = 6;
             }
+
+            //It's the same as befor but if we have only the 12 first hours
+            //we will count the 12 and add the hour 12:00 and 18:00
+            //in the end we have 14 count
             else if (this.Temperature.Temp.Count == 14)
             {
                 hourLimit = 12;
             }
+
+            //This time if we have the first 18 first hours
+            //we will count the first 18 hours and add the hour 18:00
+            //in the end we have 19 count
             else if (this.Temperature.Temp.Count == 19)
             {
                 hourLimit = 18;
             }
 
+            //The display for the current day 
             if (DateTime.Now.Date == this.View.dtpWeather.Value.Date)
             {
                 count = 0;
@@ -155,6 +176,7 @@ namespace meteo_gramme
                     axixX.Add(String.Format("{0}:00", count.ToString()));
                 }
             }
+            //The display for the third day
             else if (this.View.dtpWeather.Value.Date == date)
             {
                 count = 0;
@@ -171,6 +193,7 @@ namespace meteo_gramme
                     axixX.Add(String.Format("{0}:00", count.ToString()));
                 }
             }
+            //The display after the third day
             else if (this.View.dtpWeather.Value.Date > date)
             {
                 count = 0;
@@ -180,6 +203,7 @@ namespace meteo_gramme
                     axixX.Add(String.Format("{0}:00", count.ToString()));
                 }
             }
+            //The display for two days after today
             else
             {
                 count = 0;

@@ -1,8 +1,11 @@
-﻿using System;
+﻿/*
+ * Ruben Carvalho et Besmir Silka 
+ * CFPT - T.IS-E2A
+ * 20.11.2017
+ * POO v4.0 - meteo-gramme
+ * Contains the temperatures
+ */
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace meteo_gramme
 {

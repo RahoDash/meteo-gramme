@@ -45,6 +45,9 @@ namespace meteo_gramme
         #endregion
 
         #region Constructor
+        public DataExctractor() : this(DEFAULT_LAT, DEFAULT_LON, DEFAULT_ALT, DateTime.Now)
+        {
+        }
         /// <summary>
         /// constructor designated
         /// </summary>
@@ -71,20 +74,6 @@ namespace meteo_gramme
         {
             DateTime d;
             date = date.Remove(10);
-            d = Convert.ToDateTime(date);
-            return d;
-        }
-
-        /// <summary>
-        /// Convert into datetime the day of the XML date format
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns>datetime</returns>
-        public DateTime ConvertToDateTime(string date)
-        {
-            DateTime d;
-            date = date.Replace('T', ' ');
-            date = date.Remove(date.Length - 1);
             d = Convert.ToDateTime(date);
             return d;
         }
@@ -155,15 +144,15 @@ namespace meteo_gramme
                                         else
                                         {
                                             //Restart the counter of precipitation value
-                                            //when we go after NUMBER_OF_DIFFERENT_PRECIPITATION_FOR_ONE_HOUR
+                                            //when we go after NUMBER_PRECIPITATION_FOR_ONE_HOUR
                                             //or we passed the fourth day
-                                            if ((IterrationOfPrecipitation >= NUMBER_OF_DIFFERENT_PRECIPITATION_FOR_ONE_HOUR) || (daysIterration > NONE_DETAILED_DAY))
+                                            if ((IterrationOfPrecipitation >= NUMBER_PRECIPITATION_FOR_ONE_HOUR) || (daysIterration > NONE_DETAILED_DAY))
                                             {
                                                 IterrationOfPrecipitation = 0;
                                             }
                                             IterrationOfPrecipitation++;
 
-                                            //init the date of the courrent reader date
+                                            //init the date of the current reader date
                                             if (oldDateTime == DateTime.MinValue)
                                             {
                                                 oldDateTime = ConvertToDate(reader.Value);
@@ -172,9 +161,9 @@ namespace meteo_gramme
                                             //We init the values because we changed day
                                             if (oldDateTime != ConvertToDate(reader.Value))
                                             {
+                                                oldDateTime = ConvertToDate(reader.Value);
                                                 this.Temperature = new Temperature();
                                                 this.Precipitation = new Precipitation();
-                                                oldDateTime = ConvertToDate(reader.Value);
                                                 IterrationOfPrecipitation = 0;
                                                 daysIterration++;
                                             }

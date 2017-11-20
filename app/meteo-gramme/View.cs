@@ -1,11 +1,17 @@
-﻿using System;
+﻿/*
+ * Ruben Carvalho et Besmir Silka 
+ * CFPT - T.IS-E2A
+ * 20.11.2017
+ * POO v4.0 - meteo-gramme
+ */
+using System;
 using System.Windows.Forms;
 
 namespace meteo_gramme
 {
     public partial class View : Form
     {
-        Meteo meteo;
+        MeteoControllers meteo;
 
         public View()
         {
@@ -46,7 +52,7 @@ namespace meteo_gramme
         {
             try
             {
-                meteo = new Meteo(Convert.ToDecimal(txtLat.Text), Convert.ToDecimal(txtLon.Text),
+                meteo = new MeteoControllers(Convert.ToDecimal(txtLat.Text), Convert.ToDecimal(txtLon.Text),
                     Convert.ToDecimal(txtbAlt.Text), dtpWeather.Value, this);
                 meteo.CreateMeteogram();
             }
