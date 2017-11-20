@@ -33,70 +33,108 @@
             this.btnLoad = new System.Windows.Forms.Button();
             this.cc1 = new LiveCharts.WinForms.CartesianChart();
             this.dtpWeather = new System.Windows.Forms.DateTimePicker();
+            this.txtbAlt = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtLat
             // 
-            this.txtLat.Location = new System.Drawing.Point(17, 15);
-            this.txtLat.Margin = new System.Windows.Forms.Padding(4);
+            this.txtLat.Location = new System.Drawing.Point(13, 34);
             this.txtLat.Name = "txtLat";
-            this.txtLat.Size = new System.Drawing.Size(132, 22);
+            this.txtLat.Size = new System.Drawing.Size(100, 20);
             this.txtLat.TabIndex = 0;
             this.txtLat.Text = "46.2043907";
-            this.txtLat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressForDecimal);
+            this.txtLat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPressForDecimal);
             // 
             // txtLon
             // 
-            this.txtLon.Location = new System.Drawing.Point(159, 15);
-            this.txtLon.Margin = new System.Windows.Forms.Padding(4);
+            this.txtLon.Location = new System.Drawing.Point(119, 34);
             this.txtLon.Name = "txtLon";
-            this.txtLon.Size = new System.Drawing.Size(132, 22);
+            this.txtLon.Size = new System.Drawing.Size(100, 20);
             this.txtLon.TabIndex = 1;
             this.txtLon.Text = "6.1431577";
-            this.txtLon.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressForDecimal);
+            this.txtLon.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPressForDecimal);
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(299, 9);
-            this.btnLoad.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLoad.Location = new System.Drawing.Point(331, 28);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(100, 38);
+            this.btnLoad.Size = new System.Drawing.Size(75, 31);
             this.btnLoad.TabIndex = 2;
-            this.btnLoad.Text = "Load";
+            this.btnLoad.Text = "Charger";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.Load_Click);
             // 
             // cc1
             // 
-            this.cc1.Location = new System.Drawing.Point(17, 87);
-            this.cc1.Margin = new System.Windows.Forms.Padding(4);
+            this.cc1.Location = new System.Drawing.Point(13, 71);
             this.cc1.Name = "cc1";
-            this.cc1.Size = new System.Drawing.Size(947, 454);
+            this.cc1.Size = new System.Drawing.Size(710, 369);
             this.cc1.TabIndex = 3;
             this.cc1.Text = "cartesianChart1";
             // 
             // dtpWeather
             // 
             this.dtpWeather.CustomFormat = "yyyy-MMM-dd HH:mm:ss";
-            this.dtpWeather.Location = new System.Drawing.Point(571, 15);
-            this.dtpWeather.Margin = new System.Windows.Forms.Padding(4);
+            this.dtpWeather.Location = new System.Drawing.Point(523, 34);
             this.dtpWeather.Name = "dtpWeather";
-            this.dtpWeather.Size = new System.Drawing.Size(265, 22);
+            this.dtpWeather.Size = new System.Drawing.Size(200, 20);
             this.dtpWeather.TabIndex = 4;
-            this.dtpWeather.ValueChanged += new System.EventHandler(this.dtpWeather_ValueChanged);
+            this.dtpWeather.ValueChanged += new System.EventHandler(this.Weather_ValueChanged);
+            // 
+            // txtbAlt
+            // 
+            this.txtbAlt.Location = new System.Drawing.Point(225, 34);
+            this.txtbAlt.Name = "txtbAlt";
+            this.txtbAlt.Size = new System.Drawing.Size(100, 20);
+            this.txtbAlt.TabIndex = 5;
+            this.txtbAlt.Text = "375";
+            this.txtbAlt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPressForDecimal);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Latitude";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(116, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(54, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Longitude";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(225, 18);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(42, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Altitude";
             // 
             // Vue
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(977, 554);
+            this.ClientSize = new System.Drawing.Size(733, 450);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtbAlt);
             this.Controls.Add(this.dtpWeather);
             this.Controls.Add(this.cc1);
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.txtLon);
             this.Controls.Add(this.txtLat);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Vue";
             this.Text = "MeteoGramme";
             this.ResumeLayout(false);
@@ -111,6 +149,10 @@
         private System.Windows.Forms.Button btnLoad;
         private LiveCharts.WinForms.CartesianChart cc1;
         private System.Windows.Forms.DateTimePicker dtpWeather;
+        private System.Windows.Forms.TextBox txtbAlt;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 

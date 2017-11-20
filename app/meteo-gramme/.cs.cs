@@ -12,40 +12,36 @@ namespace meteo_gramme
     public class DATA
     {
 
-        #region Const
         // This will be the url to access the data we need.
         private const string DEFAULT_URL = "http://api.met.no/weatherapi/locationforecast/1.9/?";
-        private const int NUMBER_OF_DIFFERENT_PRECIPITATION_FOR_ONE_HOUR = 4;
-        private const int NONE_DETAILED_DAY = 4;
-        #endregion
+        private const decimal DEFAULT_LAT = 46.2043907M;
+        private const decimal DEFAULT_LON = 6.1431577M;
+        private const decimal DEFAULT_ALT = 375;
 
-        #region Fields
         // Declaration of fields
         private decimal _latitude;
         private decimal _longitude;
+        private string _url;
         private decimal _altitude;
         public Temperature Temperature;
         public Precipitation Precipitation;
-        #endregion
 
 
 
-        #region Variables
-        private int IterrationOfPrecipitation;
+        private int CountIterration;
         private DateTime oldDateTime;
         private DateTime StateDateTime;
-        #endregion
         //private DateTime StateDate;
 
-        #region Properties
+        /// <summary>
+        /// Properties
+        /// </summary>
         public decimal Latitude { get => _latitude; set => _latitude = value; }
         public decimal Longitude { get => _longitude; set => _longitude = value; }
+        public string Url { get => DEFAULT_URL + "lat=" + Latitude.ToString() + ";lon=" + Longitude.ToString()+ "&msl=" +Altitude.ToString(); set => _url = value; }
         public decimal Altitude { get => _altitude; set => _altitude = value; }
-        public string Url { get => DEFAULT_URL + "lat=" + Latitude.ToString() + ";lon=" + Longitude.ToString() + "&msl=" + Altitude.ToString(); }
-        #endregion
 
-
-        #region Constructor
+        public DATA() : this(DEFAULT_LAT, DEFAULT_LON,DEFAULT_ALT, DateTime.Now) { }
         /// <summary>
         /// constructor
         /// </summary>
@@ -60,32 +56,96 @@ namespace meteo_gramme
             this.Precipitation = new Precipitation();
             ExtractData(dateTime);
         }
-        #endregion
 
-        #region Methods
         /// <summary>
-        /// Convert into date the day of the XML date format
+        /// Will read the xml file and extract the data and put them in the differente classes
         /// </summary>
-        /// <param name="date">XML date from api.met.no</param>
-        /// <returns>datetime</returns>
+        public void ExtractData(DateTime dateTime)
+        {
+            CountIterration = 0;
+            int days = 1;
+            StateDateTime = dateTime.Date;
+            if (CanRequest(Url))
+            {
+                try
+                {
+                    //string attribute = "";           
+                    using (XmlReader reader = XmlReader.Create(Url))
+                    {
+                        while (reader.Read())
+                        {
+                            switch (reader.Name)
+                            {
+                                case "model":
+
+                                    //InitDateTime = Convert.ToDateTime(reader)
+                                    //InitDateTime = reader.MoveToAttribute("from") ? ConvertToDateTime(reader.Value) : DateTime.Now;
+                                    break;
+                                case "time":
+                                    if (reader.MoveToAttribute("to"))
+                                    {
+                                        if (StateDateTime < ConvertToDate(reader.Value))
+                                        {
+                                            reader.Dispose();   
+                                        }
+                                        else
+                                        {
+                                            if ((CountIterration >= 4) || (days > 4))
+                                            {
+                                                CountIterration = 0;
+                                            }
+                                            CountIterration++;
+                                            
+                                            if (oldDateTime == DateTime.MinValue)
+                                            {
+                                                oldDateTime = ConvertToDate(reader.Value);
+                                            }
+
+                                            if (oldDateTime.AddHours(1) != ConvertToDate(reader.Value).AddHours(1))
+                                            {
+                                                this.Temperature = new Temperature();
+                                                this.Precipitation = new Precipitation();
+                                                oldDateTime = ConvertToDate(reader.Value);
+                                                CountIterration = 0;
+                                                days++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case "temperature":
+                                    if (reader.MoveToAttribute("value"))
+                                        Temperature.Temp.Add(Convert.ToDecimal(reader.Value));
+                                    break;
+                                case "precipitation":
+                                    if (reader.MoveToAttribute("value") && (CountIterration == 1)) {
+                                        Precipitation.Value.Add(Convert.ToDecimal(reader.Value));
+                                    }
+                                    break;
+                                case "minTemperature":
+                                    if (reader.MoveToAttribute("value"))
+                                        Temperature.TempMin.Add(Convert.ToDecimal(reader.Value));
+                                    break;
+                                case "maxTemperature":
+                                    if (reader.MoveToAttribute("value"))
+                                        Temperature.TempMax.Add(Convert.ToDecimal(reader.Value));
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
         public DateTime ConvertToDate(string date)
         {
             DateTime d;
             date = date.Remove(10);
-            d = Convert.ToDateTime(date);
-            return d;
-        }
-
-        /// <summary>
-        /// Convert into datetime the day of the XML date format
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns>datetime</returns>
-        public DateTime ConvertToDateTime(string date)
-        {
-            DateTime d;
-            date = date.Replace('T', ' ');
-            date = date.Remove(date.Length - 1);
             d = Convert.ToDateTime(date);
             return d;
         }
@@ -106,7 +166,7 @@ namespace meteo_gramme
             }
             catch (Exception)
             {
-                MessageBox.Show("Aucune donnée pour latitude : " + Latitude.ToString() + " et longitude : " + Longitude.ToString());
+                MessageBox.Show("Aucune donnée pour latitude : "+Latitude.ToString()+" et longitude : "+Longitude.ToString());
                 result = false;
                 return result;
             }
@@ -123,95 +183,5 @@ namespace meteo_gramme
             response.Dispose();
             return result;
         }
-
-        /// <summary>
-        /// Will read the xml file and extract the data and put them in the differente classes
-        /// </summary>
-        public void ExtractData(DateTime dateTime)
-        {
-            //
-            int daysIterration = 1;
-
-            IterrationOfPrecipitation = 0;
-            StateDateTime = dateTime.Date;
-
-            if (CanRequest(Url))
-            {
-                try
-                {
-                    using (XmlReader reader = XmlReader.Create(Url))
-                    {
-                        while (reader.Read())
-                        {
-                            switch (reader.Name)
-                            {
-                                case "time":
-                                    if (reader.MoveToAttribute("to"))
-                                    {
-                                        //Dispose de reader if the date is 
-                                        if (StateDateTime < ConvertToDate(reader.Value))
-                                        {
-                                            reader.Dispose();
-                                        }
-                                        else
-                                        {
-                                            //Restart the counter of precipitation value
-                                            //when we go after NUMBER_OF_DIFFERENT_PRECIPITATION_FOR_ONE_HOUR
-                                            //or we passed the fourth day
-                                            if ((IterrationOfPrecipitation >= NUMBER_OF_DIFFERENT_PRECIPITATION_FOR_ONE_HOUR) || (daysIterration > NONE_DETAILED_DAY))
-                                            {
-                                                IterrationOfPrecipitation = 0;
-                                            }
-                                            IterrationOfPrecipitation++;
-
-                                            //init the date of the courrent reader date
-                                            if (oldDateTime == DateTime.MinValue)
-                                            {
-                                                oldDateTime = ConvertToDate(reader.Value);
-                                            }
-
-                                            //We init the values because we changed day
-                                            if (oldDateTime != ConvertToDate(reader.Value))
-                                            {
-                                                this.Temperature = new Temperature();
-                                                this.Precipitation = new Precipitation();
-                                                oldDateTime = ConvertToDate(reader.Value);
-                                                IterrationOfPrecipitation = 0;
-                                                daysIterration++;
-                                            }
-                                        }
-                                    }
-                                    break;
-                                case "temperature":
-                                    if (reader.MoveToAttribute("value"))
-                                        Temperature.Temp.Add(Convert.ToDecimal(reader.Value));
-                                    break;
-                                case "precipitation":
-                                    if (reader.MoveToAttribute("value") && (IterrationOfPrecipitation == 1))
-                                    {
-                                        Precipitation.Value.Add(Convert.ToDecimal(reader.Value));
-                                    }
-                                    break;
-                                case "minTemperature":
-                                    if (reader.MoveToAttribute("value"))
-                                        Temperature.TempMin.Add(Convert.ToDecimal(reader.Value));
-                                    break;
-                                case "maxTemperature":
-                                    if (reader.MoveToAttribute("value"))
-                                        Temperature.TempMax.Add(Convert.ToDecimal(reader.Value));
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Erreur lors de l'extraction");
-                }
-            }
-        } 
-        #endregion
     }
 }
