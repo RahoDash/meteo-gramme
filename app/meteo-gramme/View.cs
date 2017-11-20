@@ -11,7 +11,7 @@ namespace meteo_gramme
 {
     public partial class View : Form
     {
-        MeteoControllers meteo;
+        MeteoController meteo;
 
         public View()
         {
@@ -55,7 +55,7 @@ namespace meteo_gramme
         {
             try
             {
-                meteo = new MeteoControllers(Convert.ToDecimal(txtLat.Text), Convert.ToDecimal(txtLon.Text),
+                meteo = new MeteoController(Convert.ToDecimal(txtLat.Text), Convert.ToDecimal(txtLon.Text),
                     Convert.ToDecimal(txtbAlt.Text), dtpWeather.Value, this);
                 meteo.CreateMeteogram();
             }

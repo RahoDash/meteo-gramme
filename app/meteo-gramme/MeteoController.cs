@@ -14,15 +14,8 @@ using System.Windows.Media;
 
 namespace meteo_gramme
 {
-    public class MeteoControllers
+    public class MeteoController
     {
-
-        #region Constant
-        /*private const decimal DEFAULT_LAT = 46.2043907M;
-        private const decimal DEFAULT_LON = 6.1431577M;
-        private const decimal DEFAULT_ALT = 375M;*/
-        #endregion
-
         #region Fields
         private Temperature _temperature;
         private Precipitation _precipitation;
@@ -36,7 +29,7 @@ namespace meteo_gramme
         #endregion
 
         #region Constructors
-        public MeteoControllers(decimal lat, decimal lon, decimal alt, DateTime dateTime, View view)
+        public MeteoController(decimal lat, decimal lon, decimal alt, DateTime dateTime, View view)
         {
             this.View = view;
             try
