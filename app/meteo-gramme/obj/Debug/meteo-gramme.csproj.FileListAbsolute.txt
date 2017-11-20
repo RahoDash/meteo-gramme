@@ -40,8 +40,8 @@ C:\Users\Administrateur\Desktop\Ecole\TS\meteo-gramme\app\meteo-gramme\bin\Debug
 C:\Users\Administrateur\Desktop\Ecole\TS\meteo-gramme\app\meteo-gramme\bin\Debug\LiveCharts.Wpf.pdb
 C:\Users\Administrateur\Desktop\Ecole\TS\meteo-gramme\app\meteo-gramme\bin\Debug\LiveCharts.Wpf.xml
 C:\Users\Administrateur\Desktop\Ecole\TS\meteo-gramme\app\meteo-gramme\obj\Debug\meteo-gramme.csprojResolveAssemblyReference.cache
-C:\Users\Administrateur\Desktop\Ecole\TS\meteo-gramme\app\meteo-gramme\obj\Debug\meteo_gramme.Vue.resources
 C:\Users\Administrateur\Desktop\Ecole\TS\meteo-gramme\app\meteo-gramme\obj\Debug\meteo_gramme.Properties.Resources.resources
 C:\Users\Administrateur\Desktop\Ecole\TS\meteo-gramme\app\meteo-gramme\obj\Debug\meteo-gramme.csproj.GenerateResource.Cache
 C:\Users\Administrateur\Desktop\Ecole\TS\meteo-gramme\app\meteo-gramme\obj\Debug\meteo-gramme.exe
 C:\Users\Administrateur\Desktop\Ecole\TS\meteo-gramme\app\meteo-gramme\obj\Debug\meteo-gramme.pdb
+C:\Users\Administrateur\Desktop\Ecole\TS\meteo-gramme\app\meteo-gramme\obj\Debug\meteo_gramme.View.resources

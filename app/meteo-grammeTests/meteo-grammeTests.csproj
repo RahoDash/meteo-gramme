@@ -56,7 +56,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="DATATests.cs" />
+    <Compile Include="DataExctractorTests.cs" />
     <Compile Include="MeteoTests.cs" />
     <Compile Include="PrecipitationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

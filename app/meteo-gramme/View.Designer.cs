@@ -46,6 +46,7 @@
             this.txtLat.Size = new System.Drawing.Size(100, 20);
             this.txtLat.TabIndex = 0;
             this.txtLat.Text = "46.2043907";
+            this.txtLat.TextChanged += new System.EventHandler(this.TextBox_Changed);
             this.txtLat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPressForDecimal);
             // 
             // txtLon
@@ -55,6 +56,7 @@
             this.txtLon.Size = new System.Drawing.Size(100, 20);
             this.txtLon.TabIndex = 1;
             this.txtLon.Text = "6.1431577";
+            this.txtLon.TextChanged += new System.EventHandler(this.TextBox_Changed);
             this.txtLon.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPressForDecimal);
             // 
             // btnLoad
@@ -91,6 +93,7 @@
             this.txtbAlt.Size = new System.Drawing.Size(100, 20);
             this.txtbAlt.TabIndex = 5;
             this.txtbAlt.Text = "375";
+            this.txtbAlt.TextChanged += new System.EventHandler(this.TextBox_Changed);
             this.txtbAlt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPressForDecimal);
             // 
             // label1
@@ -120,7 +123,7 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Altitude";
             // 
-            // Vue
+            // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -135,7 +138,7 @@
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.txtLon);
             this.Controls.Add(this.txtLat);
-            this.Name = "Vue";
+            this.Name = "View";
             this.Text = "MeteoGramme";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -144,12 +147,12 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtLat;
-        private System.Windows.Forms.TextBox txtLon;
+        public System.Windows.Forms.TextBox txtLat;
+        public System.Windows.Forms.TextBox txtLon;
         private System.Windows.Forms.Button btnLoad;
-        private LiveCharts.WinForms.CartesianChart cc1;
-        private System.Windows.Forms.DateTimePicker dtpWeather;
-        private System.Windows.Forms.TextBox txtbAlt;
+        public LiveCharts.WinForms.CartesianChart cc1;
+        public System.Windows.Forms.DateTimePicker dtpWeather;
+        public System.Windows.Forms.TextBox txtbAlt;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

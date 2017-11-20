@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿/*
+ * Ruben Carvalho et Besmir Silka 
+ * CFPT - T.IS-E2A
+ * 20.11.2017
+ * POO v4.0 - meteo-gramme
+ * Extract the data of the site http://api.met.no/weatherapi/
+ */
+using System;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -15,8 +18,11 @@ namespace meteo_gramme
         #region Const
         // This will be the url to access the data we need.
         private const string DEFAULT_URL = "http://api.met.no/weatherapi/locationforecast/1.9/?";
-        private const int NUMBER_OF_DIFFERENT_PRECIPITATION_FOR_ONE_HOUR = 4;
+        private const int NUMBER_PRECIPITATION_FOR_ONE_HOUR = 4;
         private const int NONE_DETAILED_DAY = 4;
+        public const decimal DEFAULT_LAT = 46.2043907M;
+        public const decimal DEFAULT_LON = 6.1431577M;
+        public const decimal DEFAULT_ALT = 375M;
         #endregion
 
         #region Fields
@@ -26,16 +32,10 @@ namespace meteo_gramme
         private decimal _altitude;
         public Temperature Temperature;
         public Precipitation Precipitation;
-        #endregion
-
-
-
-        #region Variables
         private int IterrationOfPrecipitation;
         private DateTime oldDateTime;
         private DateTime StateDateTime;
         #endregion
-        //private DateTime StateDate;
 
         #region Properties
         public decimal Latitude { get => _latitude; set => _latitude = value; }
@@ -44,10 +44,9 @@ namespace meteo_gramme
         public string Url { get => DEFAULT_URL + "lat=" + Latitude.ToString() + ";lon=" + Longitude.ToString() + "&msl=" + Altitude.ToString(); }
         #endregion
 
-
         #region Constructor
         /// <summary>
-        /// constructor
+        /// constructor designated
         /// </summary>
         /// <param name="lat">This will be the latitude of the location in string</param>
         /// <param name="lon">This will be the longitude of the location in string</param>
