@@ -1,6 +1,6 @@
 ﻿namespace meteo_gramme
 {
-    partial class Vue
+    partial class View
     {
         /// <summary>
         /// Variable nécessaire au concepteur.

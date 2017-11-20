@@ -9,25 +9,25 @@ using System.Windows.Media;
 
 namespace meteo_gramme
 {
-    public partial class Vue : Form
+    public partial class View : Form
     {
         Meteo meteo;
 
-        public Vue()
+        public View()
         {
             InitializeComponent();
 
-            Update();
+            CreateMeteogram();
         }
 
         private void Load_Click(object sender, EventArgs e)
         {
-            Update();
+            CreateMeteogram();
         }
         
         private void Weather_ValueChanged(object sender, EventArgs e)
         {
-            Update();
+            CreateMeteogram();
         }
 
         private void KeyPressForDecimal(object sender, KeyPressEventArgs e)
@@ -48,7 +48,7 @@ namespace meteo_gramme
             }
         }
 
-        private new void Update()
+        private void CreateMeteogram()
         {
             meteo = new Meteo(Convert.ToDecimal(txtLat.Text), Convert.ToDecimal(txtLon.Text), Convert.ToDecimal(txtbAlt.Text), dtpWeather.Value);
 
@@ -57,10 +57,6 @@ namespace meteo_gramme
             int PreviousDay = DateTime.Today.Day;
             this.dtpWeather.MaxDate = DateTime.Today.AddDays(9);
             this.dtpWeather.MinDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, PreviousDay);
-
-            var mapper = Mappers.Xy<Meteo>()
-                .X(model => Convert.ToDouble(model.Temperature.Temp))   //use DateTime.Ticks as X
-                .Y(model => Convert.ToDouble(model.Precipitation.Value));           //use the value property as Y
 
             cc1.Series = new SeriesCollection
             {
@@ -88,7 +84,8 @@ namespace meteo_gramme
                     Fill = Brushes.Transparent,
                     PointGeometry = null,
                     StrokeThickness = 4,
-                    DataLabels = true,
+                    PointForeground = Brushes.Gray,
+                    DataLabels = false,
                     ScalesYAt = 0
                 },
                 new ColumnSeries
@@ -96,7 +93,7 @@ namespace meteo_gramme
                     Values = new ChartValues<decimal>(meteo.Precipitation.Value),
                     Title = "Precipitation (mm) :",
                     DataLabels = false,
-                    ScalesYAt = 0
+                    ScalesYAt = 1
                 },
             };
             
@@ -126,11 +123,10 @@ namespace meteo_gramme
 
         public List<string> Hours()
         {
-            List<string> labels = new List<string>();
+            List<string> axixX = new List<string>();
             int count = 0;
             DateTime date = DateTime.Now.Date;
             int hourLimit = 0;
-            //int segmentOfHourFor;
 
             date = date.AddDays(3);
 
@@ -147,7 +143,6 @@ namespace meteo_gramme
                 hourLimit = 18;
             }
 
-
             if (DateTime.Now.Date == dtpWeather.Value.Date)
             {
                 count = 0;
@@ -155,7 +150,7 @@ namespace meteo_gramme
                 {
                     count = 24 - meteo.Temperature.Temp.Count;
                     count += i;
-                    labels.Add(count.ToString());
+                    axixX.Add(String.Format("{0}:00", count.ToString()));
                 }
             }
             else if(dtpWeather.Value.Date == date)
@@ -171,7 +166,7 @@ namespace meteo_gramme
                     {
                         count = i;
                     }
-                    labels.Add(count.ToString());
+                    axixX.Add(String.Format("{0}:00", count.ToString()));
                 }
             }
             else if (dtpWeather.Value.Date > date)
@@ -180,7 +175,7 @@ namespace meteo_gramme
                 for (int i = 0; i < meteo.Temperature.Temp.Count; i++)
                 {
                     count = (i * 6);
-                    labels.Add(count.ToString());
+                    axixX.Add(String.Format("{0}:00", count.ToString()));
                 }
             }
             else
@@ -189,11 +184,11 @@ namespace meteo_gramme
                 for (int i = 0; i < meteo.Temperature.Temp.Count; i++)
                 {
                     count = i;
-                    labels.Add(count.ToString());
+                    axixX.Add(String.Format("{0}:00", count.ToString()));
                 }
             }
 
-            return labels;
+            return axixX;
         }
     }
 }

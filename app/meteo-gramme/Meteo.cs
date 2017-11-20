@@ -22,7 +22,7 @@ namespace meteo_gramme
         #endregion
 
         #region Variables
-        DATA data;
+        DataExctractor data;
         #endregion
 
         #region Properties
@@ -36,7 +36,7 @@ namespace meteo_gramme
         {
             try
             {
-                data = new DATA(Convert.ToDecimal(lat), Convert.ToDecimal(lon), Convert.ToDecimal(alt), dateTime);
+                data = new DataExctractor(Convert.ToDecimal(lat), Convert.ToDecimal(lon), Convert.ToDecimal(alt), dateTime);
             }
             catch (Exception)
             {

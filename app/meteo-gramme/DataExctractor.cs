@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace meteo_gramme
 {
-    public class DATA
+    public class DataExctractor
     {
 
         #region Const
@@ -51,7 +51,7 @@ namespace meteo_gramme
         /// </summary>
         /// <param name="lat">This will be the latitude of the location in string</param>
         /// <param name="lon">This will be the longitude of the location in string</param>
-        public DATA(decimal lat, decimal lon, decimal alt, DateTime dateTime)
+        public DataExctractor(decimal lat, decimal lon, decimal alt, DateTime dateTime)
         {
             this.Latitude = lat;
             this.Longitude = lon;
@@ -106,7 +106,7 @@ namespace meteo_gramme
             }
             catch (Exception)
             {
-                MessageBox.Show("Aucune donnée pour latitude : " + Latitude.ToString() + " et longitude : " + Longitude.ToString());
+                MessageBox.Show("Aucune donnée pour la latitude : " + Latitude.ToString() + ", la longitude : " + Longitude.ToString() + " et pour l'altitude" + Altitude.ToString());
                 result = false;
                 return result;
             }

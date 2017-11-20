@@ -59,7 +59,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DATA.cs" />
+    <Compile Include="DataExctractor.cs" />
     <Compile Include="Meteo.cs" />
     <Compile Include="Precipitation.cs" />
     <Compile Include="Temperature.cs" />
